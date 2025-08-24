@@ -1,7 +1,9 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections.Concurrent;
+using System.Text;
 using whatsapp_chat_bot.Helpers;
+using whatsapp_chat_bot.Models;
 using whatsapp_chat_bot.Models.EvolutionApi.Messages;
 using whatsapp_chat_bot.Models.EvolutionApi.Webhook;
 
@@ -15,6 +17,7 @@ namespace whatsapp_chat_bot.Controllers
         private readonly ILogger<EvolutionApiWhatsAppMessageController> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _config;
+        private static readonly ConcurrentQueue<MessageLog> MessageLogs = new();
 
         public EvolutionApiWhatsAppMessageController(
             ILogger<EvolutionApiWhatsAppMessageController> logger,
@@ -36,7 +39,14 @@ namespace whatsapp_chat_bot.Controllers
             if (!isEnable) return Ok("Ignored");
 
             string messageText = request.Data.Message.Conversation;
-            string from = request.Data.Key.RemoteJid;
+            string from = request.Data.Key.FromMe ? request.Sender : request.Data.Key.RemoteJid;
+
+            MessageLogs.Enqueue(new MessageLog
+            {
+                Timestamp = request.Data.MessageTimestamp,
+                From = from,
+                Content = request.Data.Message.Conversation
+            });
 
             _logger.LogInformation("[EvolutionApi] Message from: {From}, Content: {Body}",
                 from, messageText);
