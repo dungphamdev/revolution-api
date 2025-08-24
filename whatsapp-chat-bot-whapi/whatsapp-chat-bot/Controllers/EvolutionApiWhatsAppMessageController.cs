@@ -38,12 +38,13 @@ namespace whatsapp_chat_bot.Controllers
             //if (!isEnable || request.Data.Key.FromMe) return Ok("Ignored");
             if (!isEnable) return Ok("Ignored");
 
-            string messageText = request.Data.Message.Conversation;
-            string from = request.Data.Key.FromMe ? request.Sender : request.Data.Key.RemoteJid;
+            var messageText = request.Data.Message.Conversation;
+            var from = request.Data.Key.FromMe ? request.Sender : request.Data.Key.RemoteJid;
+            var timestamp = request.Data.MessageTimestamp;
 
             MessageLogs.Enqueue(new MessageLog
             {
-                Timestamp = request.Data.MessageTimestamp,
+                Timestamp = DateTimeOffset.FromUnixTimeSeconds(timestamp).UtcDateTime,
                 From = from,
                 Content = request.Data.Message.Conversation
             });

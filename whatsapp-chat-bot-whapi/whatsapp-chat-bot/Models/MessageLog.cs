@@ -2,7 +2,7 @@
 {
     public class MessageLog
     {
-        public int Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
         public string From { get; set; } = string.Empty;
 
