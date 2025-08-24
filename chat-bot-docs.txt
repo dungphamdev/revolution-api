@@ -1,0 +1,14 @@
+1. Login: `http://localhost:8080/manager/`: nhập api key để đăng nhập, API key trong .env, `AUTHENTICATION_API_KEY`
+2. Nhấn nút `Instance +`
+3. Nhập tên instance -> Nhấn `Save`
+4. Nhấn vào instance vừa tạo để vào trang quản lý instance đó
+5. Nhấn `Get QR Code`
+6. Dùng whatsapp điện thoại quét mã để đăng nhập: `Linked devices` -> `Link a device`
+7. Refresh trang quản lý -> Done
+
+DB evolution connection:
+	- Host: localhost
+	- Port: 5432
+	- Database: evolution
+	- Username: user
+	- Password: pass

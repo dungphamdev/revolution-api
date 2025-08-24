@@ -1,0 +1,44 @@
+Webhook Setup Instructions
+
+---
+
+1. WHAPI Cloud Webhook Setup  
+   Dashboard: https://panel.whapi.cloud/dashboard
+
+   - Click on the instance you want to set up.
+   - Copy the Instance Token from the WHAPI management page.
+   - Paste it into your project’s appsettings.json file under the key:
+     "WhapiSettings": {
+       "InstanceToken": "YOUR_TOKEN_HERE"
+     }
+   - Run your backend.
+   - Start ngrok and forward your local server:
+		Example: ngrok http http://localhost:5016
+   - Go back to the WHAPI dashboard and click Settings on your instance.
+   - In the URL field, paste the ngrok domain + endpoint:
+		Example: https://2834e22ae46e.ngrok-free.app/api/WhapiWhatsAppMessage
+   - Click Save.
+   - Test by sending a WhatsApp message:
+     + Start Message: https://wa.me/84559642211?text=Start
+     + Or send: question abc to get a different response
+
+---
+
+2. Evolution API Webhook Setup  
+   Manager: http://localhost:8080/manager
+
+   - Run your backend.
+   - Start ngrok and forward your local server:
+		Example: ngrok http http://localhost:5016
+   - In the Evolution Manager, select the instance you want to configure.
+   - Go to the left menu → Events → Webhook.
+   - In the URL field, paste the ngrok domain + endpoint:
+		Example: https://2834e22ae46e.ngrok-free.app/api/EvolutionApiWhatsAppMessage
+   - Enable the following options:
+     + Enabled
+     + Webhook by Events
+     + MESSAGES_UPSERT
+   - Click Save.
+   - Test by sending a WhatsApp message:
+     + Start Message: https://wa.me/84559642211?text=Start
+     + Or send: `question abc` to get a different response

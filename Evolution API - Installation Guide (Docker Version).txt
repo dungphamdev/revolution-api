@@ -1,0 +1,93 @@
+Evolution API - Installation Guide (Docker Version)
+====================================================
+
+This guide will help you install and run the Evolution API using Docker.
+
+----------------------------------------------------
+1. Clone the Repository
+----------------------------------------------------
+
+Run the following commands in your terminal:
+
+    git clone https://github.com/EvolutionAPI/evolution-api.git
+    cd evolution-api
+
+----------------------------------------------------
+2. Create and Configure the Environment File
+----------------------------------------------------
+
+Create a new `.env` file by copying the example:
+
+    cp .env.example .env
+
+Open `.env` in a text editor and make the following changes:
+
+Required:
+---------
+Find:
+    CACHE_REDIS_URI=redis://localhost:6379/6
+Replace with:
+    CACHE_REDIS_URI=redis://redis:6379/6
+
+(This is required for Docker networking to work properly.)
+
+Optional:
+---------
+- You may change the AUTHENTICATION_API_KEY value to something custom (or leave it as-is).
+  > Make sure to save this value; you will use it to log in to the admin panel.
+
+- Feel free to modify other environment variables if needed.
+
+----------------------------------------------------
+3. Start with Docker
+----------------------------------------------------
+
+Make sure you're still in the `evolution-api` directory, then run:
+
+    docker compose up -d
+
+Docker will download and start the Evolution API along with required services like Redis.
+
+----------------------------------------------------
+4. Verify Installation
+----------------------------------------------------
+
+Visit the following URL in your browser (based on the `SERVER_URL` in your `.env` file):
+
+    http://localhost:8080
+
+You should receive a JSON response like:
+
+    {
+      "status": 200,
+      "message": "Welcome to the Evolution API, it is working!",
+      "version": "2.3.0",
+      "clientName": "evolution_exchange",
+      "manager": "http://localhost:8080/manager",
+      "documentation": "https://doc.evolution-api.com",
+      "whatsappWebVersion": "2.3000.1024517539"
+    }
+
+If you see this, the API is running successfully.
+
+----------------------------------------------------
+5. Access the Admin Manager Panel
+----------------------------------------------------
+
+Visit:
+
+    http://localhost:8080/manager
+
+Login:
+
+    Server URL:         (http://localhost:8080)
+    API Key Global:     Use the AUTHENTICATION_API_KEY value from your `.env` file
+
+----------------------------------------------------
+You're Done!
+----------------------------------------------------
+
+The Evolution API is now installed and running with Docker.
+
+For more documentation, visit:
+https://doc.evolution-api.com/v2/en
